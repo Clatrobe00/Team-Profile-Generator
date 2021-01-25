@@ -37,17 +37,32 @@ const internQuestions = [{
     name: 'school',
     message: 'Enter employee school:'   
 }];
+
 const managerQuestions = [{
     type: 'input',
     name: 'officeNumber',
     message: 'Enter employee office number:'   
 }];
 
+const addNewEmployee = [{
+    type: 'list',
+    name: 'addNewEmployee',
+    message: 'Would you like to add another employee',
+    choices: ['yes', 'no']
+}]
+
 async function main () {
     const employeeAnswers = await inquirer.prompt(employeeQuestions);
     const roleAnswers = await handleRoleQuestions(employeeAnswers.role);
     const employee = constructEmployee(employeeAnswers, roleAnswers);
-    console.log(employee);
+    console.log(employee.buildHTML());
+    const addEmployee = await inquirer.prompt(addNewEmployee);
+    console.log(addEmployee);
+    if (addEmployee.addNewEmployee === 'yes') {
+        main();
+    } else {
+        console.log('Thanks!');
+    }
 };
 
 const handleRoleQuestions = (role) => {
