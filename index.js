@@ -3,6 +3,7 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
+const fs = require('fs');
 // 1. // predefine the 3 classes/constructor functions for the three types of employees : manager, engineer, intern - DONE
 const employeeQuestions = [{
     type: 'input',
@@ -63,7 +64,12 @@ async function main () {
     } else {
         console.log('Thanks!');
     }
+    fs.writeFile('Test.html', employee.buildHTML(), (err) => {  
+        if (err) throw err; 
+    }) 
 };
+
+
 
 const handleRoleQuestions = (role) => {
     switch (role) {
