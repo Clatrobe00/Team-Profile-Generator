@@ -46,8 +46,8 @@ const managerQuestions = [{
 async function main () {
     const employeeAnswers = await inquirer.prompt(employeeQuestions);
     const roleAnswers = await handleRoleQuestions(employeeAnswers.role);
-    console.log(employeeAnswers);
-    console.log(roleAnswers);
+    const employee = constructEmployee(employeeAnswers, roleAnswers);
+    console.log(employee);
 };
 
 const handleRoleQuestions = (role) => {
@@ -62,6 +62,20 @@ const handleRoleQuestions = (role) => {
             console.log('oops');
             break;
     }
+}
+
+const constructEmployee = (employeeAnswers, roleAnswers) => {
+    switch (employeeAnswers.role) {
+        case 'manager':
+            return new Manager(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, roleAnswers.officeNumber);
+        case 'engineer':
+            return new Engineer(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, roleAnswers.github);
+        case 'intern':
+            return new Intern(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, roleAnswers.school);
+        default: 
+            console.log('oops');
+            break;
+    }    
 }
 
 main();
