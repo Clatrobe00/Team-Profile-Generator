@@ -19,12 +19,6 @@ const employeeQuestions = [{
     type: 'input',
     name: 'email',
     message: 'Enter employee email:'
-},
-{
-    type: 'list',
-    name: 'role',
-    message: 'Select employee role:',
-    choices: ['manager', 'engineer', 'intern']
 }];
 
 const engineerQuestions = [{
@@ -49,18 +43,46 @@ const addNewEmployee = [{
     type: 'list',
     name: 'addNewEmployee',
     message: 'Would you like to add another employee',
-    choices: ['yes', 'no']
+    choices: ['intern', 'engineer', 'exit']
 }]
 
-async function main () {
+const teamName = [{
+    type: 'input',
+    name: 'teamName',
+    message: "Enter your team name"
+}]
+
+// write an async init function that builds the initial html, then append the cards to that file.
+
+async function init () {
+    //const team = await inquirer.prompt(teamName);
+    fs.writeFile(`test.html`, buildBaseHTML(), (err) => {
+        if (err) throw err;    
+    });
+    const managerAnswersA = await inquirer.prompt(employeeQuestions);
+    const managerAnswersB = await handleRoleQuestions('manager');
+    const manager = constructEmployee(managerAnswersA, managerAnswersB);
+    const managerCard = manager.buildHTML()
+    cardAppend(managerCard)
+    console.log('Done!');
+    const nextEmployee = await inquirer.prompt(addNewEmployee);
+    if (nextEmployee === 'exit'){
+        console.log('Your Profile has been generated.')
+        return;
+    } else {
+        main(nextEmployee)
+    }
+}
+
+async function main (nextEmployee) {
     const employeeAnswers = await inquirer.prompt(employeeQuestions);
-    const roleAnswers = await handleRoleQuestions(employeeAnswers.role);
+    const roleAnswers = await handleRoleQuestions(nextEmployee);
     const employee = constructEmployee(employeeAnswers, roleAnswers);
     console.log(employee.buildHTML());
     const addEmployee = await inquirer.prompt(addNewEmployee);
     console.log(addEmployee);
-    if (addEmployee.addNewEmployee === 'yes') {
-        main();
+    if (addEmployee === 'exit') {
+        console.log('Your profile has been generated');
     } else {
         console.log('Thanks!');
     }
@@ -69,7 +91,20 @@ async function main () {
     }) 
 };
 
-
+const buildBaseHTML = () => {
+    const htmlBase = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Profile</title>
+</head>
+<body>
+       
+</body>
+</html>`;
+    return htmlBase;
+}
 
 const handleRoleQuestions = (role) => {
     switch (role) {
@@ -83,6 +118,19 @@ const handleRoleQuestions = (role) => {
             console.log('oops');
             break;
     }
+}
+
+const cardAppend = (card) => {
+    fs.readFile(`test.html`, 'utf8', function (err, data) {
+    if (err) {
+      return console.log(err);
+    };
+    const writeData = (/\<\/body>/g, card + '</body>');
+    fs.appendFile('test.html', writeData, function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+      });
+  });
 }
 
 const constructEmployee = (employeeAnswers, roleAnswers) => {
@@ -99,7 +147,8 @@ const constructEmployee = (employeeAnswers, roleAnswers) => {
     }    
 }
 
-main();
+//main();
+init();
 // 2. get info from the client about each employee to be added
 //    2.1 ask for name and other info of the manager
 //    2.2 ask if client wants to add another employee or exit
@@ -110,3 +159,11 @@ main();
 // ask client if they want to add more interns or enginners or exit 
 // if they want to exit, finish the app
 // if the want to build a new employer, add one to html using the constructor of the apropriate type 
+
+// ${
+//     (this.github && `<h3>Github: ${this.github}</h3>`) ||
+//     (this.officeNum && `<h3>Office Number: ${this.officeNum}</h3>`) ||
+//     (this.school && `<h3>School: ${this.school}</h3>`)
+//   }
+
+  //look up end()
