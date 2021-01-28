@@ -103,6 +103,12 @@ class App {
         }    
     }
 
+    build (roster) {
+        roster = roster.map((e) => e.buildHTML());
+        roster = roster.join('');
+        return roster;
+    };
+
     buildHTML = () => {
         const teamProfile = 
 `<!DOCTYPE html>
@@ -114,13 +120,26 @@ class App {
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">Team Profile</h5>
+    <p class="card-text">Here are the team members</p>
+  </div>
+  <div class="card-footer text-muted">
+  </div>
+</div>
     <div class="container-fluid">
-        ${this.roster.map(employee => (employee.buildHTML()))}
+        <div class="row">
+        ${this.build(this.roster)}
+        </div>
     </div>        
 </body>
 </html>`
         return teamProfile;
     }
+
+    
+    
 
     end() {
       const testProfile = this.buildHTML();  
