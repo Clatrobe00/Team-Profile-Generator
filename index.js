@@ -27,7 +27,7 @@ class App {
     engineerQuestions = [{
         type: 'input',
         name: 'github',
-        message: 'Enter employee GitHub:'   
+        message: 'Enter GitHub username:'   
     }];
     
     internQuestions = [{
