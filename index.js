@@ -111,9 +111,12 @@ class App {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Team Profile</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-        ${this.roster.map(employee => (employee.buildHTML()))}    
+    <div class="container-fluid">
+        ${this.roster.map(employee => (employee.buildHTML()))}
+    </div>        
 </body>
 </html>`
         return teamProfile;
