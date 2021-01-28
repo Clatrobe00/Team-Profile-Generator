@@ -1,11 +1,11 @@
-const Engineer = require('../lib/Intern');
+const Engineer = require('../lib/Engineer');
 
-describe("Manager Class", () => {
-    it("Returns the correct role after init", () => {
-      expect(new Engineer("Lia", "789", "example3@gmail.com", "Clatrobe00").getGithub()).toBe("Clatrobe00");
+describe("Engineer Class", () => {
+    it("Returns the correct github after init", () => {
+      expect(new Engineer("Lia", "789", "example3@gmail.com", "Clatrobe00").getGithub()).toBe("https://github.com/Clatrobe00");
     });
   
-    it("stores employee variables in the correct place", () => {
+    it("Returns the correct role after init", () => {
       expect(new Engineer("Lia", "789", "example3@gmail.com", "Clatrobe00").getRole()).toBe("Engineer")
     });
   });

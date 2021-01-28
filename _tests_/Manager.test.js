@@ -5,7 +5,7 @@ describe("Manager Class", () => {
       expect(new Manager("Ted", "123", "example@gmail.com", "12").getRole()).toBe("Manager");
     });
   
-    it("stores employee variables in the correct place", () => {
+    it("Returns the correct office after init", () => {
       expect(new Manager("Ted", "123", "example@gmail.com", "12").office).toBe("Office: 12");
     });
   });
