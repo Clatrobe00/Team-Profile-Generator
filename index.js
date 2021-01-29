@@ -138,9 +138,6 @@ class App {
         return teamProfile;
     }
 
-    
-    
-
     end() {
       const testProfile = this.buildHTML();  
       console.log('goodbye, your app will be in some folder');
