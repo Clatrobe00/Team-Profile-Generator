@@ -57,13 +57,11 @@ class App {
     }
 
     async promptEmployee(position) {
-        console.log('promptEmployee position is' + position);
+        console.log(`Prompting for position: ${position}`);
         const employeeAnswersA = await inquirer.prompt(this.employeeQuestions);
         const employeeAnswersB = await this.handleRoleQuestions(position);
         const employee = this.constructEmployee(employeeAnswersA, employeeAnswersB, position);
-        console.log(employee);
         this.roster.push(employee);
-        console.log(this.roster);
         this.newEmployee();
     }
 
@@ -89,7 +87,6 @@ class App {
     }
 
     constructEmployee = (employeeAnswers, roleAnswers, position) => {
-        console.log(position);
         switch (position) {
             case 'manager':
                 return new Manager(employeeAnswers.name, employeeAnswers.id, employeeAnswers.email, roleAnswers.officeNumber);
@@ -140,8 +137,8 @@ class App {
 
     end() {
       const testProfile = this.buildHTML();  
-      console.log('goodbye, your app will be in some folder');
-      fs.writeFile('Test.html', testProfile, (err) => {  
+      console.log('Goodbye. Your profile will be written to "Profile.html"');
+      fs.writeFile('Profile.html', testProfile, (err) => {  
         if (err) throw err; 
     });
     }
